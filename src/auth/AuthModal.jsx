@@ -12,7 +12,7 @@ export default function AuthModal() {
 
   const [current, setCurrent] = useState("create");
   const [backBtn, setBackBtn] = useState(false);
-  const [title, setTitle] = useState("");
+  const [titleKey, setTitleKey] = useState("");
   const [phone, setPhone] = useState("");
   const [fullName, setFullName] = useState("");
 
@@ -45,7 +45,7 @@ export default function AuthModal() {
                   alt="back"
                 />
               )}
-              <p className="auth__desc-text">{title}</p>
+              <p className="auth__desc-text">{titleKey ? t(titleKey) : ""}</p>
             </div>
             <img
               src={"/icons/close.svg"}
@@ -58,18 +58,18 @@ export default function AuthModal() {
           <div className="auth__child">
             {current === "create" && (
               <Create
-                title={setTitle}
+                title={setTitleKey}
                 setCurrent={setCurrent}
                 setBack={setBackBtn}
-                phone={phone} 
-                setPhone={setPhone} 
+                phone={phone}
+                setPhone={setPhone}
                 setFullName={setFullName}
               />
             )}
 
             {current === "login" && (
               <Login
-                title={setTitle}
+               title={setTitleKey}
                 setCurrent={setCurrent}
                 setBack={setBackBtn}
                 phone={phone}
@@ -79,12 +79,12 @@ export default function AuthModal() {
 
             {current === "code" && (
               <Code
-                title={setTitle}
+                 title={setTitleKey}
                 setCurrent={setCurrent}
                 setBack={setBackBtn}
                 phone={phone}
                 fullName={fullName}
-                login={login} // AuthContext'dan kelgan login funksiyasi
+                login={login}
               />
             )}
           </div>

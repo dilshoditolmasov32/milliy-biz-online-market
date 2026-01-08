@@ -12,11 +12,12 @@ export default function Create({
   fullName,
 }) {
   const { t } = useTranslation();
-  const { requestOtp, verifyOtp, loading, error } = useOtp();
+  const { requestOtp, loading, error } = useOtp();
+
   useEffect(() => {
     setBack(false);
-    title(t("Telefon raqamingizni kiriting"));
-  }, [setBack, title, t]);
+    title("enterPhone");
+  }, [setBack, title]);
 
   const handleNextStep = async () => {
     const cleanPhone = phone.replace(/\D/g, "");
@@ -33,11 +34,13 @@ export default function Create({
     <div className="create__wrap">
       <div className="create__input">
         <p className="create__input-text">
-          {t("Telefon")}.{" "}
-          <span>{t("Tasdiqlash kodini telegram bot orqali yuboramiz.")}</span>
+          {t("phone")}.{" "}
+          <span>{t("confirmViaBot")}</span>
         </p>
+
         <AcountInput phone={phone} setPhone={setPhone} />
       </div>
+
       {error && (
         <div
           className="create__error-message"
@@ -52,13 +55,16 @@ export default function Create({
         onClick={handleNextStep}
         disabled={loading || !isFormValid}
       >
-        {loading ? t("Yuborilmoqda...") : t("Ro'yxatdan o'tish")}
+        {loading ? t("sending") : t("create")}
       </button>
 
       <p className="create__footer-text">
-        {t("Akkauntingiz bormi?")}{" "}
-        <span onClick={() => setCurrent("login")} className="create__link">
-          {t("Akkauntga kirish")}
+        {t("haveAccount")}{" "}
+        <span
+          onClick={() => setCurrent("login")}
+          className="create__link"
+        >
+          {t("login")}
         </span>
       </p>
     </div>

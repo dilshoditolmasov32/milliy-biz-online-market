@@ -8,8 +8,6 @@ export default function Categories() {
   const { categories } = useCategories();
   const { t, i18n } = useTranslation();
 
-  console.log(categories, "categoru");
-
   return (
     <div className="categories">
       <div className="container">
@@ -25,16 +23,25 @@ export default function Categories() {
       </div>
       <div className="container">
         <div className="categories__wrap">
-          {categories?.slice(0, 4)?.map((item) => (
-            <Link to={"/products"} className="card" key={item.id}>
-              <div className="card__wrap">
-                <div className="card__desc">
-                  <h3 className="card__desc-title">{item?.name}</h3>
-                  <p dangerouslySetInnerHTML={{ __html: item?.description }} />
+          {categories?.slice(0, 4)?.map((item) => {
+            // 1. Joriy tilga mos tarjimani qidirib topamiz
+            // tr.locale qismi API-dan kelayotgan til maydoni nomiga qarab o'zgarishi mumkin
+            const translation = item.translations?.find(
+              (tr) => tr.locale === i18n.language
+            ) || item; // Agar tarjima topilmasa, asosiy obyektni ko'rsatadi
+
+            return (
+              <Link to={"/products"} className="card" key={item.id}>
+                <div className="card__wrap">
+                  <div className="card__desc">
+                    {/* 2. Topilgan tarjimadagi 'name' ni chiqaramiz */}
+                    <h3 className="card__desc-title">{translation.name}</h3>
+                    <p>{translation.slug}</p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

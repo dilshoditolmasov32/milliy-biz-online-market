@@ -22,6 +22,8 @@
     align-items: center;
     gap: 6px;
     position: relative;
+    color: #969b9f;
+    text-transform: capitalize;
 
     & span {
       color: var(--white);
@@ -57,19 +59,31 @@
 }
 
 .choosen {
-  & p {
+  p {
     color: var(--primary-color);
   }
+}
+
+.media__link {
+  color: #969b9f; 
+}
+
+.media__link-text{
+  text-transform: capitalize;
+
 }
 
 .media__icon {
   width: 20px;
   height: 20px;
-  fill: #969b9f;
+  color: #969b9f;
 }
 
-.media__link.choosen .media__icon path {
-  fill: #10355b !important;
+.media__link.choosen .media__icon {
+  color: #10355b;
+}
+.media__link.choosen {
+  color: #10355b; 
 }
 
 @media screen and (max-width: 480px) {

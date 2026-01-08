@@ -15,10 +15,8 @@ export default function ProductCard({ info, addToCart }) {
   if (!info) return null;
 
   const handleAddToCart = async () => {
-    if (isAdding) return; // Agar jarayon ketayotgan bo'lsa, funksiyani to'xtatish
-
+    if (isAdding) return; 
     try {
-      // Optimistik tarzda UI ni yangilash (darhol)
       dispatch(
         optimisticAdd({
           product_id: info.id,
@@ -36,8 +34,7 @@ export default function ProductCard({ info, addToCart }) {
           }        )
       ).unwrap();
     } catch (error) {
-      toast.error("Xatolik yuz berdi");
-    }
+      console.error(error);}
   };
 
   const productImage = info.images?.[0]?.original_image_url || imgPlaceholder;

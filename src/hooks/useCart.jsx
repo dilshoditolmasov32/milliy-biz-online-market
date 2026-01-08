@@ -6,12 +6,11 @@ import { fetchCart } from "../store/cart";
 const useCart = () => {
   const dispatch = useDispatch();
   const { cart, loading: cartLoading } = useSelector((s) => s.cart);
-  
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
- const getCart = () => {
+  const getCart = () => {
     dispatch(fetchCart());
   };
 
@@ -29,14 +28,36 @@ const useCart = () => {
     }
   };
 
+  const updateLocalCart = (newItemId, newQty) => {
+    const updatedItems = cart.data.items.map((item) =>
+      item.id === newItemId ? { ...item, quantity: newQty } : item
+    );
+
+    dispatch({
+      type: "cart/fetchCart/fulfilled",
+      payload: { ...cart, data: { ...cart.data, items: updatedItems } },
+    });
+  };
+
+  const removeItem = async (itemId) => {
+    try {
+      await removeCartItem(itemId);
+      dispatch(fetchCart());
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return {
-   cart: cart, 
-    cartItems: cart?.data?.items || [], 
+    cart: cart,
+    cartItems: cart?.data?.items || [],
     fullCart: cart?.data,
     getCart,
     addItem,
     loading: loading || cartLoading,
     error,
+    updateLocalCart,
+    removeItem,
   };
 };
 

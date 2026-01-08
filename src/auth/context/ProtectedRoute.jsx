@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children }) => {
   }
 
   if (error || !userMe) {
-    return <Navigate to="/profile" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;

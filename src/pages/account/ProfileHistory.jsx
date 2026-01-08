@@ -3,12 +3,16 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useTranslation } from "react-i18next";
+
 import checkIcon from "../../assets/img/check.svg";
 import cancelIcon from "../../assets/img/orderCancelIcon.svg";
 import durationIcon from "../../assets/img/durationIcon.svg";
 import productOrderImage from "../../assets/img/productPhoto.png";
 
 export default function OrdersHistory() {
+  const { t } = useTranslation();
+
   const orderProducts = [
     [
       {
@@ -18,16 +22,7 @@ export default function OrdersHistory() {
         price: "5 900 000 so’m",
         discountPrice: "5 600 000 so’m",
         checkedIcon: checkIcon,
-        titleText: "Yetkazib berildi",
-      },
-      {
-        id: "#35645421",
-        productImage: productOrderImage,
-        name: "Школьная парта",
-        price: "5 500 000 so’m",
-        discountPrice: "5 000 000 so’m",
-        checkedIcon: checkIcon,
-        titleText: "Yetkazib berildi",
+        statusKey: "delivered",
       },
     ],
     [
@@ -38,7 +33,7 @@ export default function OrdersHistory() {
         price: "5 900 000 so’m",
         discountPrice: "5 600 000 so’m",
         checkedIcon: cancelIcon,
-        titleText: "Bekor qilindi",
+        statusKey: "canceled",
       },
     ],
     [
@@ -49,7 +44,7 @@ export default function OrdersHistory() {
         price: "5 900 000 so’m",
         discountPrice: "5 600 000 so’m",
         checkedIcon: durationIcon,
-        titleText: "Jarayonda",
+        statusKey: "inProgress",
       },
     ],
   ];
@@ -74,16 +69,11 @@ export default function OrdersHistory() {
             }}
           >
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon
-                sx={{
-                 
-                }}
-                />}
+              expandIcon={<ExpandMoreIcon  />}
               aria-controls={`panel-${groupIndex}-content`}
               id={`panel-${groupIndex}-header`}
               sx={{
                 borderRadius: "12px",
-                
               }}
             >
               <div className="checked-product">
@@ -95,15 +85,21 @@ export default function OrdersHistory() {
 
               <ul className="checked-product-data">
                 <li>
-                  <p>Sana</p>
+                  <p>
+                    {t("date")}
+                  </p>
                   <span>05.04.2023 10:47</span>
                 </li>
                 <li>
-                  <p>Buyurtma ID raqami</p>
+                  <p>
+                    {t("orderId")}
+                  </p>
                   <span>{firstItem.id}</span>
                 </li>
                 <li>
-                  <p>Buyurtma narxi</p>
+                  <p>
+                    {t("productPrice")}
+                  </p>
                   <span>{firstItem.discountPrice}</span>
                 </li>
               </ul>
@@ -133,7 +129,9 @@ export default function OrdersHistory() {
                     </div>
 
                     <div className="product-item__price">
-                        <p>Maxsulot narxi</p>
+                      <p>
+                        {t("productPrice")}
+                      </p>
                       <span className="old">{item.price}</span>
                       <span className="new">{item.discountPrice}</span>
                     </div>

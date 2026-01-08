@@ -2,9 +2,10 @@ import { useState } from "react";
 import OrdersHistory from "./ProfileHistory";
 import ProfileInfo from "./ProfilInfo";
 import ModalLogout from "../../components/modal/ModalLogout.jsx";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import arrowIcon from "../../assets/img/arrowIcon.svg";
 import { NavLink } from "react-router";
+import { useLogout } from "../../hooks/useLogout.jsx";
 
 const TABS = {
   PROFILE: "profile",
@@ -12,44 +13,43 @@ const TABS = {
 };
 
 export default function UserProfile({ onLogout }) {
+  const { t } = useTranslation();
+  const { logout, loading } = useLogout();
   const [activeTab, setActiveTab] = useState(TABS.PROFILE);
-  const [res, setRes] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [navInfo, setNavInfo] = useState({
-    title: t("myPage"),
-    nav: false,
-    current: t("myPage"),
-    newStatus: false,
-  });
 
   const handleLogout = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(true);
   };
 
   const onCloseFunc = () => {
     setIsOpen(false);
   };
-
-
+  const confirmLogout = async () => {
+    await logout();
+    setIsOpen(false);
+  };
   return (
     <div className="profile-page">
       <div className="profile-page__container">
         <div className="profile-page__breadcrumbs">
           <NavLink to="/">
             <button className="profile-page__back-btn">
-              <img src={arrowIcon} alt="arrow icon" />
-              Ortga
+              <img src={arrowIcon} alt={t("back")} />
+              {t("back")}
             </button>
           </NavLink>
-          <NavLink to={"/"}>
-            <span className="profile-page__crumb">Bosh sahifa</span>
+
+          <NavLink to="/">
+            <span className="profile-page__crumb">{t("home")}</span>
           </NavLink>
+
           <span className="profile-page__crumb profile-page__crumb--current">
-            Mening sahifam
+            {t("myPage")}
           </span>
         </div>
 
-        <h1 className="profile-page__title">Mening sahifam</h1>
+        <h1 className="profile-page__title">{t("myPage")}</h1>
 
         <div className="profile-page__layout">
           <aside className="profile-sidebar">
@@ -62,8 +62,9 @@ export default function UserProfile({ onLogout }) {
               }
               onClick={() => setActiveTab(TABS.PROFILE)}
             >
-              Mening sahifam
+              {t("myPage")}
             </button>
+
             <button
               className={
                 "profile-sidebar__item" +
@@ -73,16 +74,24 @@ export default function UserProfile({ onLogout }) {
               }
               onClick={() => setActiveTab(TABS.ORDERS)}
             >
-              Xaridlar tarixi
+              {t("ordersHistory")}
             </button>
+
             <button
               className="profile-sidebar__item profile-sidebar__item--logout"
               onClick={handleLogout}
             >
-              Chiqish
+              {t("logout")}
             </button>
           </aside>
-          {isOpen ? <ModalLogout  onCloseFunc={onCloseFunc}  /> : ""}
+
+          {isOpen && (
+            <ModalLogout
+              onCloseFunc={onCloseFunc}
+              onConfirm={confirmLogout}
+              loading={loading}
+            />
+          )}
 
           <section className="profile-content">
             {activeTab === TABS.PROFILE ? <ProfileInfo /> : <OrdersHistory />}
@@ -92,48 +101,3 @@ export default function UserProfile({ onLogout }) {
     </div>
   );
 }
-
-const mockOrders = [
-  {
-    id: "#356445848",
-    status: "Yetkazib berildi",
-    statusType: "success",
-    date: "05.04.2023",
-    time: "10:47",
-    total: "5 600 000 so'm",
-    items: [
-      {
-        id: "ID 564645851",
-        title: "Shkafli parta",
-        subtitle: "150x90 sm",
-        price: "5 600 000 so'm",
-        badge: null,
-      },
-      {
-        id: "ID 564645853",
-        title: "Shkafli parta 150x90 sm",
-        subtitle: "",
-        price: "5 600 000 so'm",
-        badge: "-36%",
-      },
-    ],
-  },
-  {
-    id: "#356445849",
-    status: "Bekor qilindi",
-    statusType: "danger",
-    date: "05.04.2023",
-    time: "10:47",
-    total: "5 600 000 so'm",
-    items: [],
-  },
-  {
-    id: "#356445850",
-    status: "Jarayonda",
-    statusType: "warning",
-    date: "05.04.2023",
-    time: "10:47",
-    total: "5 600 000 so'm",
-    items: [],
-  },
-];

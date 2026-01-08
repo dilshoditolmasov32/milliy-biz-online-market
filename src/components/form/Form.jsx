@@ -8,19 +8,25 @@ import { useTranslation } from "react-i18next";
 import PhoneInput from "../inputs/PhoneInput";
 import formaImage from "../../assets/img/formImg.png";
 import galka from "../../assets/img/toast.svg";
-import cancel from "../../assets/img/cancel.svg";
 
-// Stil va doimiylar
 const optionSx = {
-  px: 2.5, py: 1.5, fontSize: 14, fontFamily: "Neometric",
-  display: "flex", alignItems: "center", justifyContent: "space-between",
+  px: 2.5,
+  py: 1.5,
+  fontSize: 14,
+  fontFamily: "Neometric",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
   cursor: "pointer",
   "&:hover": { backgroundColor: "#F5F5F7" },
-  "&[aria-selected='true']": { fontWeight: 500, color: "#10355B", backgroundColor: "#FFFFFF" },
+  "&[aria-selected='true']": {
+    fontWeight: 500,
+    color: "#10355B",
+    backgroundColor: "#FFFFFF",
+  },
   "& svg": { opacity: 0 },
   "&[aria-selected='true'] svg": { opacity: 1 },
 };
-
 
 export default function Form() {
   const [name, setName] = useState("");
@@ -29,15 +35,13 @@ export default function Form() {
   const { t } = useTranslation();
 
   const handleNameChange = (e) => {
-    // Kirill va Lotin harflari uchun RegEx kengaytirildi
     const cleanedValue = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s'\-]/g, "");
     setName(cleanedValue);
   };
 
   const handleSend = async () => {
-    // Telefon uzunligini tekshirish (faqat raqamlarni sanaymiz)
     const pureTel = tel.replace(/\D/g, "");
-    
+
     if (name.trim() !== "" && pureTel.length >= 9 && userCity) {
       const botToken = "8139440344:AAERuskhG8X2Ed-YdR8171JsTT5xXMYiD00";
       const chatId = "-1002689018491";
@@ -54,57 +58,90 @@ export default function Form() {
           }),
         });
 
-        // Muvaffaqiyatli yuborilganda tozalash
         setName("");
         setTel("");
-        
+
         toast(
           <div className="tost">
             <img src={galka} alt="Done" />
             <span className="tost__text">Успешно отправлено!</span>
           </div>,
-          { style: { width: "100%", padding: "10px", background: "none", boxShadow: "none" }, autoClose: 3000, hideProgressBar: true, closeButton: false }
+          {
+            style: {
+              width: "100%",
+              padding: "10px",
+              background: "none",
+              boxShadow: "none",
+            },
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeButton: false,
+          }
         );
       } catch (err) {
-        // Xatolik toasti (kod o'zgarishsiz)
+        console.log(err);
       }
-    } else {
-      // To'ldirilmagan maydonlar toasti
     }
   };
+
+  const cities = [
+    { value: "tashkent-city", key: "tashkentCity" },
+    { value: "tashkent-region", key: "tashkentRegion" },
+    { value: "samarkand", key: "samarkand" },
+    { value: "farghona", key: "farghona" },
+    { value: "bukhara", key: "bukhara" },
+    { value: "krozam", key: "krozam" },
+    { value: "andijon", key: "andijon" },
+    { value: "navoiy", key: "navoiy" },
+    { value: "namangan", key: "namangan" },
+    { value: "khiva", key: "khiva" },
+    { value: "qashqadaryo", key: "qashqadaryo" },
+    { value: "surxondaryo", key: "surxondaryo" },
+    { value: "jizzakh", key: "jizzakh" },
+  ];
 
   return (
     <div className="form">
       <div className="container">
         <div className="form__wrap">
-          <div className="form__desc" data-aos="fade-right">
+          <div className="form__desc" >
             <div className="form__desc-txts">
               <h2 className="form__desc-txts__title">{t("formTitle")}.</h2>
               <p className="form__desc-txts__text">{t("formText")}</p>
             </div>
             <div className="form__desc-main">
-              <input onChange={handleNameChange} value={name} type="text" placeholder={t("firstLastName")} className="form__desc-main__inp" />
+              <input
+                onChange={handleNameChange}
+                value={name}
+                type="text"
+                placeholder={t("firstLastName")}
+                className="form__desc-main__inp"
+              />
               <PhoneInput value={tel} changeTel={setTel} />
 
               <Select
-                placeholder="Tanlang"
+                placeholder={t("choose")}
                 indicator={<KeyboardArrowDown />}
                 value={userCity}
-                // TO'G'IRLANDI: MUI Joy Select (event, newValue) argumentlarini oladi
                 onChange={(e, newValue) => setUserCity(newValue)}
                 sx={{
-                  // Sizning sx stillaringiz...
-                  flex: 1, width: "100%", background: "#fff", borderRadius: "10px",
-                  "--Select-radius": "10px", "--Select-minHeight": "62px",
-                  border: "none", boxShadow: "0 0 0 1px #E4E4E7",
-                  "&.Mui-focused": { boxShadow: "0 0 0 2px #10355B" }, // Fokus stilini qo'shdik
+                  flex: 1,
+                  width: "100%",
+                  background: "#fff",
+                  borderRadius: "10px",
+                  "--Select-radius": "10px",
+                  "--Select-minHeight": "62px",
+                  border: "none",
+                  boxShadow: "0 0 0 1px #E4E4E7",
+                  "&.Mui-focused": { boxShadow: "0 0 0 2px #10355B" },
                 }}
               >
-                <Option value="toshkent-shahri" sx={optionSx}>Toshkent shahri <CheckIcon fontSize="small" /></Option>
-                <Option value="toshkent-viloyati" sx={optionSx}>Toshkent viloyati <CheckIcon fontSize="small" /></Option>
-                <Option value="qashqadaryo" sx={optionSx}>Qashqadaryo <CheckIcon fontSize="small" /></Option>
-                <Option value="surxondaryo" sx={optionSx}>Surxondaryo <CheckIcon fontSize="small" /></Option>
-                <Option value="jizzax" sx={optionSx}>Jizzax <CheckIcon fontSize="small" /></Option>
+                {cities.map((city) => (
+                  <Option key={city.value} value={city.value} sx={optionSx}>
+                    {t(`${city.key}`)}
+                    <CheckIcon fontSize="small" />
+                  </Option>
+                ))}
               </Select>
 
               <button className="form__desc-main__btn" onClick={handleSend}>

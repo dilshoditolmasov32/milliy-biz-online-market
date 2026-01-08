@@ -1,11 +1,14 @@
+import { useTranslation } from "react-i18next";
 
 const Username = ({ fullName, setFullName }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="username_input">
-      <label>Ism va familiya</label>
+      <label>{t("fullNameLabel")}</label>
       <input
         type="text"
-        placeholder="Ism familyangizni kiriting"
+        placeholder={t("fullNamePlaceholder")}
         className="username-input"
         value={fullName}
         onChange={(e) => setFullName(e.target.value)}
@@ -15,4 +18,3 @@ const Username = ({ fullName, setFullName }) => {
 };
 
 export default Username;
-

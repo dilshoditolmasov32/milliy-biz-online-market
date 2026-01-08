@@ -1,9 +1,10 @@
-import { useState } from "react"; 
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const FilterButton = ({ label, isActive, onClick }) => {
   return (
     <button
-      className={`filter-button ${isActive ? 'active' : ''}`}
+      className={`filter-button ${isActive ? "active" : ""}`}
       onClick={onClick}
     >
       {label}
@@ -12,33 +13,30 @@ const FilterButton = ({ label, isActive, onClick }) => {
 };
 
 const ProductFilter = () => {
-  const [activeFilter, setActiveFilter] = useState('Barchasi');
+  const [activeFilter, setActiveFilter] = useState("Barchasi");
+  const { t } = useTranslation();
+  const filters = [
+    { key: "specialOffer", value: "special" },
+    { key: "news", value: "news" },
+    { key: "all", value: "all" },
+  ];
 
   return (
     <div className="product-filter-container">
-
       <div className="all-products-box">
-        <div className="all-products-text">Barcha mahsulotlar</div>
-        <div className="product-count">2 930 Mahsulot</div>
+        <div className="all-products-text">{t("barchaMahsulotlar")}</div>
+        <div className="product-count">2 930 {t("product")}</div>
       </div>
 
       <div className="filter-buttons-group">
-        <FilterButton
-          label="Mahsus taklif"
-          isActive={activeFilter === 'Mahsus taklif'}
-          onClick={() => setActiveFilter('Mahsus taklif')}
-        />
-        <FilterButton
-          label="Yangilik"
-          isActive={activeFilter === 'Yangilik'}
-          onClick={() => setActiveFilter('Yangilik')}
-        />
-       
-        <FilterButton
-          label="Barchasi"
-          isActive={activeFilter === 'Barchasi'}
-          onClick={() => setActiveFilter('Barchasi')}
-        />
+        {filters.map((filter) => (
+          <FilterButton
+            key={filter.value}
+            label={t(filter.key)}
+            isActive={activeFilter === filter.value}
+            onClick={() => setActiveFilter(filter.value)}
+          />
+        ))}
       </div>
     </div>
   );

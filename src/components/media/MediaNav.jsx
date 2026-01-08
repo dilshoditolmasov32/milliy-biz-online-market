@@ -1,9 +1,4 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
-import home from "../../assets/img/home.svg";
-import cart from "../../assets/img/cart.svg";
-import userLogin from "../../assets/img/user-login.svg";
-import search from "../../assets/img/search-mobile.svg";
 import { useTranslation } from "react-i18next";
 import useAuthMe from "../../hooks/useAuthMe.jsx";
 
@@ -26,11 +21,11 @@ export default function MediaNav() {
             viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-             className="media__icon"
+            className="media__icon"
           >
             <path
               d="M9.85547 1H10.1445C10.4111 1 10.6667 1.10673 10.8545 1.2959L18.71 9.21094C18.8957 9.39822 19 9.65128 19 9.91504V18C19 18.5523 18.5523 19 18 19H13.7295C13.1772 19 12.7295 18.5523 12.7295 18V14.2314C12.7295 13.3523 12.3166 12.5242 11.6152 11.9941C10.6149 11.2383 9.23475 11.2383 8.23438 11.9941C7.53298 12.5242 7.12014 13.3523 7.12012 14.2314V18C7.12012 18.5523 6.6724 19 6.12012 19H2C1.44772 19 1 18.5523 1 18V9.91504C1 9.65128 1.10433 9.39822 1.29004 9.21094L9.14551 1.2959C9.33326 1.10673 9.58894 1 9.85547 1Z"
-          fill="currentColor"
+              fill="currentColor"
             />
           </svg>
           <p className="media__link-text">{t("mainPage")}</p>
@@ -48,7 +43,7 @@ export default function MediaNav() {
             viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-                className="media__icon"
+            className="media__icon"
           >
             <path
               fillRule="evenodd"
@@ -64,7 +59,7 @@ export default function MediaNav() {
           className={({ isActive }) =>
             isActive ? "media__link choosen" : "media__link"
           }
-          to="/cart"
+          to="/basket"
         >
           <svg
             width={20}
@@ -72,13 +67,13 @@ export default function MediaNav() {
             viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-               className="media__icon"
+            className="media__icon"
           >
             <path
               fillRule="evenodd"
               clipRule="evenodd"
               d="M0 1.00002C0 0.447729 0.447729 0 1.00002 0H3.6873C4.16082 0 4.56943 0.332111 4.6662 0.79564L5.33524 4.00008H18.0004C19.105 4.00008 20.0005 4.89553 20.0005 6.00013V10.3252C20.0005 11.2721 19.3366 12.0891 18.4098 12.283L7.54284 14.5558C6.46157 14.7819 5.40172 14.0887 5.17567 13.0073L2.87449 2.00005H1.00002C0.447729 2.00005 0 1.55232 0 1.00002ZM6.92609 11.6196C7.03899 12.1603 7.56894 12.5071 8.10967 12.3941L17.2051 10.4924C17.6684 10.3955 18.0004 9.98686 18.0004 9.5135V7.00014C18.0004 6.44786 17.5526 6.00013 17.0003 6.00013H5.75282L6.92609 11.6196Z"
-             fill="currentColor"
+              fill="currentColor"
             />
             <path
               d="M6.36314 20C7.36732 20 8.18139 19.186 8.18139 18.1818C8.18139 17.1777 7.36732 16.3636 6.36314 16.3636C5.35896 16.3636 4.54492 17.1777 4.54492 18.1818C4.54492 19.186 5.35896 20 6.36314 20Z"
@@ -89,26 +84,26 @@ export default function MediaNav() {
               fill="currentColor"
             />
           </svg>
-          <p className="media__link-text">{t("cart")}</p>
-          {/* {basket.length !== 0 && <span>{basket.length}</span>} */}
+          <p className="media__link-text">{t("basket")}</p>
         </NavLink>
 
         <NavLink
           className={({ isActive }) =>
             isActive ? "media__link choosen" : "media__link"
           }
-          to="/account"
+          to="/account/profile"
         >
           <svg
             width={20}
             height={20}
             viewBox="0 0 20 20"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"    className="media__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            className="media__icon"
           >
             <path
               d="M10 12.25C12.3636 12.25 14.6782 13.0035 16.3838 14.0928C18.1363 15.212 18.9852 16.5013 18.998 17.4775C18.9876 17.4939 18.9649 17.526 18.9121 17.5723C18.7674 17.6989 18.502 17.8528 18.0859 18.0088C17.2602 18.3184 16.1038 18.5418 14.876 18.6953C13.6631 18.8469 12.4424 18.9235 11.5205 18.9619C11.0612 18.981 10.6788 18.9904 10.4121 18.9951C10.2788 18.9975 10.1738 18.9984 10.1035 18.999C10.0686 18.9993 10.0419 18.9999 10.0244 19H9.97559C9.95813 18.9999 9.9314 18.9993 9.89648 18.999C9.82619 18.9984 9.72122 18.9975 9.58789 18.9951C9.3212 18.9904 8.93883 18.981 8.47949 18.9619C7.55762 18.9235 6.33694 18.8469 5.12402 18.6953C3.89624 18.5418 2.73982 18.3184 1.91406 18.0088C1.49798 17.8528 1.23258 17.6989 1.08789 17.5723C1.03456 17.5256 1.01128 17.4938 1.00098 17.4775C1.01386 16.5013 1.86374 15.212 3.61621 14.0928C5.32182 13.0035 7.63636 12.25 10 12.25ZM10 1C11.0609 1 12.078 1.42173 12.8281 2.17188C13.5783 2.92202 14 3.93913 14 5C14 6.06087 13.5783 7.07798 12.8281 7.82812C12.078 8.57827 11.0609 9 10 9C8.93913 9 7.92202 8.57827 7.17188 7.82812C6.42173 7.07798 6 6.06087 6 5C6 3.93913 6.42173 2.92202 7.17188 2.17188C7.92202 1.42173 8.93913 1 10 1Z"
-             fill="currentColor"
+              fill="currentColor"
             />
           </svg>
           <p className="media__link-text">

@@ -14,7 +14,6 @@ export default function Home() {
 
   return (
     <>
-      {/* <Header setSearchQuery={setSearchQuery} /> */}
       <ProductCard searchQuery={searchQuery} />
       <Slides lang="ru" />
       <Categories />

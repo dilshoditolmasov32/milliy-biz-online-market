@@ -21,16 +21,14 @@ export default function Footer() {
             <div className="footer__l">
               <div className="footer__left">
                 <div className="footer__titles-media">
-                  <a 
-                 data-aos="flip-down"
+                  <a
                     data-social="Instagram"
                     style={{ "--accent-color": "#FF0069" }}
                     href="https://www.instagram.com/"
                   >
                     <IoLogoInstagram />
                   </a>
-                  <a 
-                 data-aos="flip-down"
+                  <a
                     data-social="Facebook"
                     style={{ "--accent-color": "#0866FF" }}
                     href="https://www.facebook.com/profile.php?id=61566515812935"
@@ -40,7 +38,6 @@ export default function Footer() {
                   </a>
 
                   <a
-                  data-aos="flip-down"
                     data-social="Telegram"
                     style={{ "--accent-color": "#26A5E4" }}
                     href="https://t.me/@fromMrX"
@@ -49,7 +46,6 @@ export default function Footer() {
                     <FaTelegramPlane />
                   </a>
                   <a
-                 data-aos="flip-down"
                     data-social="Youtube "
                     style={{ "--accent-color": "#FF0000" }}
                     href="https://www.youtube.com/watch?v=8JW3PvhUmb4&list=RD9Eg7iBWqEFg&index=3"
@@ -58,7 +54,7 @@ export default function Footer() {
                     <AiFillYoutube />
                   </a>
                 </div>
-                <div className="footer__btm" data-aos="flip-down">
+                <div className="footer__btm">
                   <img
                     className="footer__btm-qr"
                     src={qrCode}
@@ -69,7 +65,7 @@ export default function Footer() {
                 </div>
               </div>
               <div className="contact-phone-data">
-                <div className="contact-info" data-aos="fade-up">
+                <div className="contact-info">
                   <h3>Информация</h3>
                   <p>В магазин</p>
                   <p>Связаться с нами!</p>
@@ -80,7 +76,7 @@ export default function Footer() {
                     <span> +998 99 999 99 96</span>
                   </a>
                 </div>
-                <div className="phone-info" data-aos="fade-up"  >
+                <div className="phone-info">
                   <h3>Информация</h3>
                   <p>В магазин</p>
                   <p>Связаться с нами!</p>
@@ -116,7 +112,7 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="footer__main-map" data-aos="fade-left">
+            <div className="footer__main-map">
               <Map />
 
               <div className="footer__main-map__desc">
@@ -127,21 +123,21 @@ export default function Footer() {
                     target="_blank"
                     href="https://shorturl.at/zbBrP"
                   >
-                    Google maps
+                    {t("googleMaps")}
                   </a>
                   <a
                     className="footer__main-map__desc-nav__link"
                     target="_blank"
                     href="https://shorturl.at/5rq4u"
                   >
-                    Yandex maps
+                    {t("yandexMaps")}
                   </a>
                   <a
                     className="footer__main-map__desc-nav__link"
                     target="_blank"
                     href="https://shorturl.at/aha7U"
                   >
-                    2gis
+                    {t("2maps")}
                   </a>
                 </div>
               </div>

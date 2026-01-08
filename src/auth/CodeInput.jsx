@@ -1,7 +1,9 @@
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function CodeInput({ length = 6, code, setCode }) {
   const inputsRef = useRef([]);
+  const { t } = useTranslation();
 
   const handleChange = (index, value) => {
     const val = value.replace(/\D/g, "");
@@ -16,16 +18,29 @@ export default function CodeInput({ length = 6, code, setCode }) {
     }
   };
 
-const handlePaste = (e) => {
-  e.preventDefault();
-  const pasteData = e.clipboardData.getData("text"); 
-  const pasteValues = pasteData.split("").filter(char => /\d/.test(char)); 
-};
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const pasteData = e.clipboardData.getData("text");
+    const digits = pasteData.replace(/\D/g, "").slice(0, length);
+
+    if (!digits) return;
+
+    const newCode = Array(length).fill("");
+    digits.split("").forEach((digit, index) => {
+      newCode[index] = digit;
+    });
+
+    setCode(newCode);
+
+    const nextIndex = Math.min(digits.length, length - 1);
+    inputsRef.current[nextIndex]?.focus();
+  };
+
   const handleKeyDown = (index, e) => {
     if (e.key === "Backspace") {
       if (!code[index] && index > 0) {
         const newCode = [...code];
-        newCode[index - 1] = ""; 
+        newCode[index - 1] = "";
         setCode(newCode);
         inputsRef.current[index - 1]?.focus();
       }
@@ -37,7 +52,12 @@ const handlePaste = (e) => {
   };
 
   return (
-    <div className="code__inputs-row" style={{ display: 'flex', gap: '8px' }}>
+    <div
+      className="code__inputs-row"
+      style={{ display: "flex", gap: "8px" }}
+      role="group"
+      aria-label={t("codeInputs")}
+    >
       {Array.from({ length }).map((_, index) => (
         <input
           key={index}
@@ -49,7 +69,8 @@ const handlePaste = (e) => {
           className="code__input-box"
           onChange={(e) => handleChange(index, e.target.value)}
           onKeyDown={(e) => handleKeyDown(index, e)}
-          onPaste={handlePaste} 
+          onPaste={handlePaste}
+          aria-label={t("codeDigit", { index: index + 1 })}
         />
       ))}
     </div>

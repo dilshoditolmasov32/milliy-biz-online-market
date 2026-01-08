@@ -10,64 +10,64 @@ import { toast } from "react-toastify";
 export default function Basket() {
   const { t } = useTranslation();
   const { cart, cartItems, loading, getCart } = useCart();
-  const cartData = cart?.data || cart;
-  const items = cartItems || cartData?.items || [];
+
+  const data = cart?.data || cart;
+  const items = cartItems || [];
 
   useEffect(() => {
     getCart();
   }, []);
 
-  if (loading) return <div className="loading">Yuklanmoqda...</div>;
-  const data = cart?.data;
-
-  const handleBuyProduct=()=>{
-    toast.success("Muvaqqiyatli amalga oshirildi")
+  if (loading && items.length === 0) {
+    return <div className="loading">{t("loading")}...</div>;
   }
+
+  const handleBuyProduct = () => {
+    toast.success(t("success_order"));
+  };
+
   return (
     <>
-      <Nav info={{ title: t("myCart"), total: cartData?.items_qty || 0 }} />
-      {cartItems.length > 0 ? (
+      <Nav info={{ title: t("myCart"), total: data?.items_qty || 0 }} />
+
+      {items.length > 0 ? (
         <div className="basket">
           <div className="basket__wrap">
             <div className="basket__prods">
-              {cartItems.length > 0 ? (
-                cartItems.map((item) => (
-                  <BasketComponent
-                    key={item.id}
-                    prod={item}
-                    refresh={getCart}
-                  />
-                ))
-              ) : (
-                <NoProds />
-              )}
+              {items.map((item) => (
+                <BasketComponent key={item.id} prod={item} refresh={getCart} />
+              ))}
             </div>
 
-            {cartItems.length > 0 && (
-              <div className="basket__total">
-                <div className="basket__total-top">
-                  <h2 className="basket__total-title">Jami</h2>
-                  <div className="basket__total-desc">
-                    <span className="basket__total-desc__text">
-                      {data?.formatted_grand_total}
-                    </span>
+            <div className="basket__total">
+              <div className="basket__total-top">
+                <h2 className="basket__total-title">{t("total")}</h2>
+                <div className="basket__total-desc">
+                  <span className="basket__total-desc__text">
+                    {data?.formatted_grand_total}
+                  </span>
+                  {/* Agar API-dan eski narx (subtotal) kelsa shuni qo'ying */}
+                  {data?.formatted_sub_total && (
                     <span className="basket__total-desc__old">
-                      {/* Agar API-da eski narx bo'lsa shuni qo'ying */}6 045
-                      000 so'm
+                      {data.formatted_sub_total}
                     </span>
-                  </div>
+                  )}
                 </div>
-
-                <div className="basket__total-categ">
-                  <div className="basket__total-categ__text">
-                    <span>Savatchadagi mahsulotlar</span>
-                    <span>{data?.items_qty} ta</span>
-                  </div>
-                </div>
-
-                <button className="basket__total-btn" onClick={handleBuyProduct}>Rasmiylashtirish</button>
               </div>
-            )}
+
+              <div className="basket__total-categ">
+                <div className="basket__total-categ__text">
+                  <span>{t("products_in_cart")}</span>
+                  <span>
+                    {data?.items_qty} {t("count_unit")}
+                  </span>
+                </div>
+              </div>
+
+              <button className="basket__total-btn" onClick={handleBuyProduct}>
+                {t("checkout")}
+              </button>
+            </div>
           </div>
         </div>
       ) : (

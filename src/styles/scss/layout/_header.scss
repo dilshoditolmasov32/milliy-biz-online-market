@@ -280,37 +280,5 @@
     }
   }
 
-  .headernav {
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-    top: 108px;
-    background: var(--white);
-    padding: 40px 0 50px;
-
-    &__wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 110px;
-      z-index: 10000;
-    }
-
-    &__title {
-      font-weight: 600;
-      font-size: 20px;
-      margin-bottom: 30px;
-    }
-
-    &__list {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-
-      &-text {
-        display: flex;
-        justify-content: space-between;
-        font-size: 18px;
-      }
-    }
-  }
+  
 }

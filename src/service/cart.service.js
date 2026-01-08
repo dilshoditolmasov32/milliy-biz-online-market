@@ -11,12 +11,16 @@ export const addToCart = (productId, quantity = 1) => {
   });
 };
 
+
 export const updateCartItem = (cartItemId, quantity) => {
-  return api.patch(`/customer/cart/item/${cartItemId}/`, {
-    quantity,
+  return api.put(`/customer/cart/update`, {
+    qty: {
+      [cartItemId]: quantity,
+    },
   });
 };
 
+
 export const removeCartItem = (cartItemId) => {
-  return api.delete(`/customer/cart/item/${cartItemId}/`);
+  return api.delete(`/customer/cart/remove/${cartItemId}/`);
 };

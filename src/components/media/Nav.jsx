@@ -39,7 +39,7 @@ export default function Nav({
             </Link>
           </div>
         </div>
-        {/* <div className="nav__bottom">
+        <div className="nav__bottom">
           <div className="nav__bottom-desc">
             <div className="nav__bottom-desc__wrap">
               {info ? (
@@ -115,7 +115,7 @@ export default function Nav({
               </p>
             </div>
           )}
-        </div> */}
+        </div>
       </div>
        </div>
     </div>

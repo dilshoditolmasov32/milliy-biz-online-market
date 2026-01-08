@@ -36,8 +36,6 @@ export default function Products({ title }) {
         ? item.status === "yangilik"
         : true;
 
-    // 2. Nomi bo'yicha qidiruv (XAVFSIZ VARIANT)
-    // item.name mavjudligini tekshiramiz (null bo'lsa false qaytaradi)
     const matchesSearch = item.name
       ? item.name.toLowerCase().includes(searchQuery.toLowerCase())
       : false;

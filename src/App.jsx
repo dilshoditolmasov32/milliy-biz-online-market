@@ -2,6 +2,7 @@ import AOS from "aos";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { ToastContainer, Zoom } from "react-toastify";
 import { Routes, Route } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
@@ -24,6 +25,7 @@ const NotFoundPage = lazy(() => import("./pages/404/NotFoundPage.jsx"));
 function App() {
   const [isSearch, setIsSearch] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation;
 
   useEffect(() => {
     AOS.init({
@@ -35,7 +37,6 @@ function App() {
   return (
     <AuthProvider>
       <Suspense
-        fallback={<p style={{ textAlign: "center" }}>Yuklanmoqda...</p>}
       >
         <Auth />
 

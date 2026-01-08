@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { X, ChevronRight, Menu, ArrowDownUp } from "lucide-react";
 import useCategories from "../../hooks/useCategories";
+import { useTranslation } from "react-i18next";
 
 export default function CatalogMenu() {
+  const { t } = useTranslation();
   const { categories, loading } = useCategories();
-
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  // const [openedMobileCategory, setOpenedMobileCategory] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const menuRef = useRef(null);
 
@@ -19,7 +19,6 @@ export default function CatalogMenu() {
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  // Ekran hajmini kuzatish
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth <= 480);
@@ -29,7 +28,6 @@ export default function CatalogMenu() {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  // Tashqariga bosilganda yopish
   useEffect(() => {
     function handleClickOutside(event) {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -44,12 +42,7 @@ export default function CatalogMenu() {
     (cat) => cat.id === selectedCategory
   );
 
-  // const handleMobileCategoryClick = (id) => {
-  //   setOpenedMobileCategory((prev) => (prev === id ? null : id));
-  // };
-
-  // // Yuklanayotgan holat
-  // if (loading && !isOpen) return <div>Yuklanmoqda...</div>;
+ 
 
   return (
     <div className="catalog-menu" ref={menuRef}>
@@ -58,7 +51,7 @@ export default function CatalogMenu() {
         onClick={toggleMenu}
       >
         <span className="catalog-btn__icon">{isOpen ? <X /> : <Menu />}</span>
-        <span className="catalog-btn__text">Katalog</span>
+       <span className="catalog-btn__text">{t("catalog")}</span>
       </button>
 
       {isOpen && !isMobile && (
@@ -66,7 +59,7 @@ export default function CatalogMenu() {
           <div className="catalog-menu__dropdown__container">
             <div className="catalog-menu__dropdown__sidebar">
               <div className="catalog-menu__dropdown__sidebar__content">
-                {categories.map((category) => (
+                {categories?.map((category) => (
                   <button
                     key={category.id}
                     onMouseEnter={() => setSelectedCategory(category.id)}
@@ -77,7 +70,7 @@ export default function CatalogMenu() {
                     
                     <span className="catalog-menu__category__icon">
                       {category.image ? (
-                        <img src={category.image} alt="category ikonka" width={20} />
+                        <img src={category.image} alt={t("categoryIcon")} width={20} />
                       ) : (
                         <ArrowDownUp size={20} />
                       )}
@@ -117,9 +110,7 @@ export default function CatalogMenu() {
               ) : (
                 <div className="catalog-menu__panel__empty">
                   <p>
-                    {loading
-                      ? "Yuklanmoqda..."
-                      : "Subkategoriyalar mavjud emas"}
+                      {loading ? t("loading") : t("noSubcategories")}
                   </p>
                 </div>
               )}

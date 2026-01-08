@@ -1,24 +1,21 @@
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router";
 
-export default function ModalLogout({ onConfirm, onClose, onCloseFunc }) {
+
+export default function ModalLogout({ onCloseFunc, onConfirm, loading }) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const location = useLocation();
-  
 
-  const handleConfirm = () => {
-    navigate("/");
-  };
 
- 
 
   return (
     <div className="modal-logout">
       <div className="modal-logout__wrapper">
         <h2 className="modal-logout__title">{t("logout")}</h2>
-        <p className="modal-logout__message">
-          {t("Are you sure you want to log out?")}
+        <p
+          className="modal-logout__message"
+          onClick={onCloseFunc}
+          disabled={loading}
+        >
+          {t("logoutConfirm")}
         </p>
         <div className="modal-logout__actions">
           <button
@@ -29,7 +26,8 @@ export default function ModalLogout({ onConfirm, onClose, onCloseFunc }) {
           </button>
           <button
             className="modal-logout__button modal-logout__button--confirm"
-            onClick={handleConfirm}
+            onClick={onConfirm}
+            disabled={loading}
           >
             {t("yes")}
           </button>
